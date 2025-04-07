@@ -5,13 +5,15 @@
   "bin": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node start.js"
+    "start": "node server.js"
   },
   "files": [
     "flows.json",
     "start.js",
     "package.json",
-    "node_modules/"
+    "node_modules/",
+    "*.js",
+    "*.json"
   ],
   "keywords": [],
   "author": "",
@@ -41,10 +43,6 @@
       "package.json",
       "*.js",
       "*.json"
-    ],
-    "external": [
-      "node-red", 
-      "express"
     ]
   }
 }

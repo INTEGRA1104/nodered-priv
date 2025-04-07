@@ -139,7 +139,7 @@
         "id": "8c296d361a2e461f",
         "type": "MySQLdatabase",
         "name": "SERRYCAMP",
-        "host": "localhost",
+        "host": "10.0.0.14",
         "port": "3306",
         "db": "alucoat",
         "tz": "",
@@ -1390,6 +1390,102 @@
         ]
     },
     {
+        "id": "67c244d0525321fb",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
         "id": "5344849289d45d74",
         "type": "comment",
         "z": "16f8c67703e4931d",
@@ -2629,9 +2725,7 @@
         "z": "16f8c67703e4931d",
         "name": "Numero de Sensores",
         "mode": "link",
-        "links": [
-            "be916d9e04bff0ce"
-        ],
+        "links": [],
         "x": 2615,
         "y": 460,
         "wires": []
@@ -2653,9 +2747,7 @@
         "z": "16f8c67703e4931d",
         "name": "Cantidad de Producciones Number",
         "mode": "link",
-        "links": [
-            "fc724bfddaf65a54"
-        ],
+        "links": [],
         "x": 2595,
         "y": 560,
         "wires": []
@@ -2666,10 +2758,7 @@
         "z": "16f8c67703e4931d",
         "name": "INFO SENSOR TEXT",
         "mode": "link",
-        "links": [
-            "c7c538e42836937d",
-            "94c721c717d7c436"
-        ],
+        "links": [],
         "x": 2215,
         "y": 2200,
         "wires": []
@@ -4028,6 +4117,8 @@
         "type": "websocket in",
         "z": "16f8c67703e4931d",
         "name": "",
+        "server": "",
+        "client": "",
         "x": 120,
         "y": 200,
         "wires": [
@@ -6774,9 +6865,7 @@
         "z": "b29fc04ec927643e",
         "name": "Numero de Sensores",
         "mode": "link",
-        "links": [
-            "be916d9e04bff0ce"
-        ],
+        "links": [],
         "x": 2615,
         "y": 460,
         "wires": []
@@ -6798,9 +6887,7 @@
         "z": "b29fc04ec927643e",
         "name": "Cantidad de Producciones Number",
         "mode": "link",
-        "links": [
-            "fc724bfddaf65a54"
-        ],
+        "links": [],
         "x": 2595,
         "y": 560,
         "wires": []
@@ -6811,10 +6898,7 @@
         "z": "b29fc04ec927643e",
         "name": "INFO SENSOR TEXT",
         "mode": "link",
-        "links": [
-            "c7c538e42836937d",
-            "94c721c717d7c436"
-        ],
+        "links": [],
         "x": 2215,
         "y": 2200,
         "wires": []
@@ -10711,9 +10795,7 @@
         "z": "15dbec24b3a42a2e",
         "name": "Numero de Sensores",
         "mode": "link",
-        "links": [
-            "be916d9e04bff0ce"
-        ],
+        "links": [],
         "x": 2615,
         "y": 460,
         "wires": []
@@ -10735,9 +10817,7 @@
         "z": "15dbec24b3a42a2e",
         "name": "Cantidad de Producciones Number",
         "mode": "link",
-        "links": [
-            "fc724bfddaf65a54"
-        ],
+        "links": [],
         "x": 2595,
         "y": 560,
         "wires": []
@@ -10748,10 +10828,7 @@
         "z": "15dbec24b3a42a2e",
         "name": "INFO SENSOR TEXT",
         "mode": "link",
-        "links": [
-            "c7c538e42836937d",
-            "94c721c717d7c436"
-        ],
+        "links": [],
         "x": 2215,
         "y": 2200,
         "wires": []
@@ -13975,9 +14052,7 @@
         "z": "aef79f16fb0c6fb5",
         "name": "Numero de Sensores",
         "mode": "link",
-        "links": [
-            "be916d9e04bff0ce"
-        ],
+        "links": [],
         "x": 2615,
         "y": 460,
         "wires": []
@@ -13999,9 +14074,7 @@
         "z": "aef79f16fb0c6fb5",
         "name": "Cantidad de Producciones Number",
         "mode": "link",
-        "links": [
-            "fc724bfddaf65a54"
-        ],
+        "links": [],
         "x": 2595,
         "y": 560,
         "wires": []
@@ -16484,10 +16557,7 @@
         "z": "aef79f16fb0c6fb5",
         "name": "INFO SENSOR TEXT",
         "mode": "link",
-        "links": [
-            "c7c538e42836937d",
-            "94c721c717d7c436"
-        ],
+        "links": [],
         "x": 2215,
         "y": 2200,
         "wires": []
@@ -17480,9 +17550,7 @@
         "z": "fe456245c351e442",
         "name": "Maquina OK",
         "mode": "link",
-        "links": [
-            "3e0dd92a89a9db60"
-        ],
+        "links": [],
         "x": 1485,
         "y": 180,
         "wires": []
@@ -17493,9 +17561,7 @@
         "z": "fe456245c351e442",
         "name": "BDD OK",
         "mode": "link",
-        "links": [
-            "09efc2bf01f63214"
-        ],
+        "links": [],
         "x": 1495,
         "y": 240,
         "wires": []
@@ -17517,9 +17583,7 @@
         "z": "fe456245c351e442",
         "name": "Tabla Sensores",
         "mode": "link",
-        "links": [
-            "87718e86f8967278"
-        ],
+        "links": [],
         "x": 1485,
         "y": 360,
         "wires": []
@@ -17529,9 +17593,7 @@
         "type": "link in",
         "z": "fe456245c351e442",
         "name": "link in 16",
-        "links": [
-            "e10302b4f7dc96cf"
-        ],
+        "links": [],
         "x": 45,
         "y": 260,
         "wires": [
@@ -17546,9 +17608,7 @@
         "type": "link in",
         "z": "fe456245c351e442",
         "name": "link in 18",
-        "links": [
-            "79a7de52432cc108"
-        ],
+        "links": [],
         "x": 385,
         "y": 1900,
         "wires": [
@@ -17596,13 +17656,7 @@
         "z": "fe456245c351e442",
         "name": "link out 1",
         "mode": "link",
-        "links": [
-            "7b523100ca36ec09",
-            "ef419cdd642fa669",
-            "d04fbf6aa7986d79",
-            "4ce37ccf95734fd2",
-            "4ee8dda6b734e582"
-        ],
+        "links": [],
         "x": 35,
         "y": 300,
         "wires": []
@@ -17674,9 +17728,7 @@
         "type": "link in",
         "z": "fe456245c351e442",
         "name": "Cambiar de Maquina",
-        "links": [
-            "ac1b4fabe3b02fc4"
-        ],
+        "links": [],
         "x": 325,
         "y": 2180,
         "wires": [
@@ -17852,10 +17904,7 @@
         "z": "fe456245c351e442",
         "name": "DEFINIR SENSOR ",
         "mode": "link",
-        "links": [
-            "10f4fd3abe34f066",
-            "14b957f9c22096b3"
-        ],
+        "links": [],
         "x": 55,
         "y": 1160,
         "wires": []
@@ -17866,9 +17915,7 @@
         "z": "fe456245c351e442",
         "name": "Cambiar de Maquina Dashboard Autoclave",
         "mode": "link",
-        "links": [
-            "a73a1925f2243c95"
-        ],
+        "links": [],
         "x": 565,
         "y": 2100,
         "wires": []
@@ -17879,9 +17926,7 @@
         "z": "fe456245c351e442",
         "name": "Cambiar de Maquina Dashboard Autoclave",
         "mode": "link",
-        "links": [
-            "a73a1925f2243c95"
-        ],
+        "links": [],
         "x": 705,
         "y": 2220,
         "wires": []
@@ -18150,10 +18195,7 @@
         "z": "fe456245c351e442",
         "name": "DEFINIR SENSOR ",
         "mode": "link",
-        "links": [
-            "10f4fd3abe34f066",
-            "14b957f9c22096b3"
-        ],
+        "links": [],
         "x": 75,
         "y": 1420,
         "wires": []
@@ -18422,10 +18464,7 @@
         "z": "fe456245c351e442",
         "name": "DEFINIR SENSOR ",
         "mode": "link",
-        "links": [
-            "10f4fd3abe34f066",
-            "14b957f9c22096b3"
-        ],
+        "links": [],
         "x": 75,
         "y": 1680,
         "wires": []
@@ -18695,10 +18734,7 @@
         "z": "fe456245c351e442",
         "name": "DEFINIR SENSOR ",
         "mode": "link",
-        "links": [
-            "10f4fd3abe34f066",
-            "14b957f9c22096b3"
-        ],
+        "links": [],
         "x": 55,
         "y": 900,
         "wires": []
@@ -19038,10 +19074,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Definir_Máquina",
-        "links": [
-            "f832d41bb1174d08",
-            "245d6a9e25a86555"
-        ],
+        "links": [],
         "x": 3595,
         "y": 1520,
         "wires": [
@@ -19359,9 +19392,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Definir Sensor 2",
-        "links": [
-            "59c29b63886634a9"
-        ],
+        "links": [],
         "x": 3595,
         "y": 1480,
         "wires": [
@@ -19469,10 +19500,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Definir_Máquina",
-        "links": [
-            "f832d41bb1174d08",
-            "245d6a9e25a86555"
-        ],
+        "links": [],
         "x": 4375,
         "y": 2060,
         "wires": [
@@ -19989,10 +20017,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Cambiar de Maquina ",
-        "links": [
-            "319f647642bc4f7a",
-            "e196e66d64ca4509"
-        ],
+        "links": [],
         "x": 125,
         "y": 80,
         "wires": [
@@ -20212,10 +20237,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Definir_Máquina",
-        "links": [
-            "f832d41bb1174d08",
-            "245d6a9e25a86555"
-        ],
+        "links": [],
         "x": 1975,
         "y": 660,
         "wires": [
@@ -20323,9 +20345,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Definir Sensor 2",
-        "links": [
-            "59c29b63886634a9"
-        ],
+        "links": [],
         "x": 1975,
         "y": 620,
         "wires": [
@@ -20357,10 +20377,7 @@
         "type": "link in",
         "z": "6abff7f95fadc4e4",
         "name": "Definir_Máquina",
-        "links": [
-            "f832d41bb1174d08",
-            "245d6a9e25a86555"
-        ],
+        "links": [],
         "x": 4375,
         "y": 2220,
         "wires": [
@@ -24090,8 +24107,6 @@
         "type": "chatgpt",
         "z": "6abff7f95fadc4e4",
         "name": "IA SERRY",
-        "topic": "__EMPTY__",
-        "BaseUrl": "https://api.openai.com",
         "x": 3310,
         "y": 2860,
         "wires": [
@@ -25602,9 +25617,7 @@
         "z": "57387f920ec8def2",
         "name": "Numero de Sensores",
         "mode": "link",
-        "links": [
-            "be916d9e04bff0ce"
-        ],
+        "links": [],
         "x": 2615,
         "y": 460,
         "wires": []
@@ -25626,9 +25639,7 @@
         "z": "57387f920ec8def2",
         "name": "Cantidad de Producciones Number",
         "mode": "link",
-        "links": [
-            "fc724bfddaf65a54"
-        ],
+        "links": [],
         "x": 2595,
         "y": 560,
         "wires": []
@@ -28073,10 +28084,7 @@
         "z": "57387f920ec8def2",
         "name": "INFO SENSOR TEXT",
         "mode": "link",
-        "links": [
-            "c7c538e42836937d",
-            "94c721c717d7c436"
-        ],
+        "links": [],
         "x": 2215,
         "y": 2200,
         "wires": []
