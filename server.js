@@ -1,40 +1,53 @@
-const RED = require("node-red");
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
+const RED = require('node-red');
 
-// Ruta temporal donde pondremos el flujo extraído
-const tempDir = path.join(os.tmpdir(), "nodered-priv");
-const flowPath = path.join(tempDir, "flows.json");
-
-// Asegurarse de que exista el directorio temporal
-if (!fs.existsSync(tempDir)) {
-  fs.mkdirSync(tempDir, { recursive: true });
+// Usamos 'process.resourcesPath' si estás usando nexe o __dirname si no
+let flowsPath;
+if (process.resourcesPath) {
+  // Si estamos en un entorno empaquetado con nexe
+  flowsPath = path.join(process.resourcesPath, 'flows.json');
+} else {
+  // Si estamos en un entorno no empaquetado, usamos __dirname
+  flowsPath = path.join(__dirname, 'flows.json'); // Aquí se usa el directorio de ejecución
 }
 
-// Copiar flows.json desde el ejecutable al sistema de archivos real
-const embeddedFlow = fs.readFileSync(path.join(__dirname, "flows.json"), "utf8");
-fs.writeFileSync(flowPath, embeddedFlow);
+// Comprobamos si flows.json está disponible
+if (!fs.existsSync(flowsPath)) {
+  console.log('El archivo flows.json no se ha encontrado en la ubicación esperada:', flowsPath);
+  process.exit(1); // Detenemos si no se encuentra el flujo
+} else {
+  console.log('Archivo flows.json encontrado:', flowsPath);
+}
 
-// Log de verificación
-console.log("Flujo copiado a:", flowPath);
+// Crear un directorio en un lugar accesible, como la carpeta del usuario
+const userDir = path.join(process.env.APPDATA, 'CapturadorIntrazaAlucoat');  // Usamos la carpeta APPDATA para almacenamiento seguro
 
-// Configuración del servidor HTTP (oculto)
-const server = http.createServer((req, res) => {
+// Aseguramos que el directorio exista
+if (!fs.existsSync(userDir)) {
+  fs.mkdirSync(userDir, { recursive: true });
+}
+
+// Creamos el servidor HTTP
+const server = require("http").createServer((req, res) => {
   res.writeHead(403, { "Content-Type": "text/plain" });
   res.end("Acceso no autorizado");
 });
 
 // Configuración de Node-RED
 const settings = {
-  httpAdminRoot: false, // Oculta el editor web de Node-RED
-  httpNodeRoot: "/api", // Solo expone los endpoints en "/api"
-  userDir: tempDir, // Usa la carpeta temporal para flujos y credenciales
-  flowFile: flowPath, // Archivo con el flujo exportado
-  uiPort: 1880,
+  httpAdminRoot: false, // Desactiva el acceso al editor web de Node-RED
+  httpNodeRoot: "/api", // Expone solo los endpoints en "/api"
+  userDir: userDir, // Usamos la carpeta APPDATA para almacenar configuraciones y flujos
+  flowFile: flowsPath, // Ruta del archivo de flujo
+  uiPort: 1880, // Puerto donde corre Node-RED
 };
 
-// Iniciar Node-RED
+// Iniciamos Node-RED
 RED.init(server, settings);
+
+// Iniciamos el servidor
 server.listen(1880, () => console.log("Node-RED corriendo en modo oculto"));
+
+// Cargamos y arrancamos los flujos de Node-RED
 RED.start();
