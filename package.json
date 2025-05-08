@@ -21,9 +21,11 @@
   "description": "Aplicación distribuida de Node-RED con flujos y contribuciones específicas.",
   "dependencies": {
     "express": "^5.1.0",
+    "mysql2": "^3.14.0",
     "node-red": "^4.0.9",
     "node-red-contrib-chatgpt": "^0.1.0",
     "node-red-contrib-excel": "^0.0.3",
+    "node-red-contrib-https": "^2.0.0",
     "node-red-contrib-s7": "^3.1.0",
     "node-red-dashboard": "^3.6.5",
     "node-red-node-email": "^3.0.3",
@@ -31,7 +33,7 @@
   },
   "nexe": {
     "input": "server.js",
-    "output": "nodered-priv.exe", 
+    "output": "nodered-priv.exe",
     "build": true,
     "targets": [
       "node18-win-x64"
@@ -46,4 +48,3 @@
     ]
   }
 }
-
