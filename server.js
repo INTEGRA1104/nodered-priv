@@ -1,106 +1,197 @@
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 const express = require("express");
 const RED = require("node-red");
 const http = require("http");
 const https = require("https");
-const mysql = require("mysql2"); // Paquete para la conexión a MariaDB
+const mysql = require("mysql2");
+const WebSocket = require("ws");
 
-// Creamos la aplicación Express
+const originalLog = console.log;
+console.log = function (...args) {
+  if (
+    args.length > 0 &&
+    typeof args[0] === "string" &&
+    args[0].includes("User directory")
+  ) {
+    // ocultamos este mensaje específico
+    return;
+  }
+  originalLog.apply(console, args);
+};
+
 const app = express();
 
-// Ruta de flows.json
-let flowsPath;
+
+const appDir = path.dirname(process.execPath);
+
+
+let flowsPath, flowsCredPath;
 if (process.resourcesPath) {
-  flowsPath = path.join(process.resourcesPath, 'flows.json');
+  flowsPath = path.join(process.resourcesPath, "flows.json");
+  flowsCredPath = path.join(process.resourcesPath, "flows_cred.json");
 } else {
-  flowsPath = path.join(__dirname, 'flows.json');
+  flowsPath = path.join(appDir, "flows.json");
+  flowsCredPath = path.join(appDir, "flows_cred.json");
 }
 
 if (!fs.existsSync(flowsPath)) {
-  console.log('El archivo flows.json no se ha encontrado:', flowsPath);
+  console.error("❌ No se encontró flows.json en:", flowsPath);
   process.exit(1);
-} else {
-  console.log('Archivo flows.json encontrado:', flowsPath);
+}
+if (!fs.existsSync(flowsCredPath)) {
+  console.error("❌ No se encontró flows_cred.json en:", flowsCredPath);
+  process.exit(1);
 }
 
-// Carpeta de usuario de Node-RED
-const userDir = path.join(process.env.APPDATA, 'CapturadorIntraza');
+
+const userDir = path.join(
+  process.env.APPDATA || process.env.HOME || os.tmpdir(),
+  ".capturadorIntraza"
+);
 if (!fs.existsSync(userDir)) {
   fs.mkdirSync(userDir, { recursive: true });
 }
 
-// Bloquear GET a "/"
+
+function copyIfNeeded(src, dest) {
+  if (
+    !fs.existsSync(dest) ||
+    fs.readFileSync(src, "utf8") !== fs.readFileSync(dest, "utf8")
+  ) {
+    fs.copyFileSync(src, dest);
+    console.log(`FLOWS CORRECTOS`);
+  } 
+}
+
+
+const destFlowsPath = path.join(userDir, "flows.json");
+const destFlowsCredPath = path.join(userDir, "flows_cred.json");
+
+copyIfNeeded(flowsPath, destFlowsPath);
+copyIfNeeded(flowsCredPath, destFlowsCredPath);
+
+
+const settings = {
+  httpAdminRoot: false,
+  httpNodeRoot: "/api",
+  userDir: userDir,
+  flowFile: destFlowsPath,
+  credentialSecret: "CapturadoRIntraZa1104", 
+  uiPort: 1880,
+  websocket: {
+    enable: true,
+    port: 1881,
+  },
+  logging: {
+    console: {
+      level: "warn",  
+      metrics: false,
+      audit: false
+    }
+  }
+};
+
+
 app.use((req, res, next) => {
-  if (req.method === 'GET' && req.url === '/') {
+  if (req.method === "GET" && req.url === "/") {
     res.status(403).send("Acceso no autorizado");
   } else {
     next();
   }
 });
 
-// Configuración de Node-RED
-const settings = {
-  httpAdminRoot: false,
-  httpNodeRoot: "/api",
-  userDir: userDir,
-  flowFile: flowsPath,
-  uiPort: 1880,
-};
 
-// Inicializar Node-RED
 RED.init(null, settings);
 app.use(settings.httpNodeRoot, RED.httpNode);
 
-// Crear servidor HTTP en puerto 1880
+
 const httpServer = http.createServer(app);
 httpServer.listen(1880, () => {
   console.log("🌐 HTTP escuchando en http://localhost:1880");
 });
 
-// Crear servidor HTTPS en puerto 8443
-const key = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
-const cert = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
-
+const key = fs.readFileSync(path.join(__dirname, "key.pem"), "utf8");
+const cert = fs.readFileSync(path.join(__dirname, "cert.pem"), "utf8");
 const httpsServer = https.createServer({ key, cert }, app);
 httpsServer.listen(8443, () => {
   console.log("🔐 HTTPS escuchando en https://localhost:8443");
 });
 
-// Iniciar flujos de Node-RED
+
 RED.start();
 
-// Conexión a MariaDB (Conexión a int_b1 e int_b2)
+
 const dbConnection_b1 = mysql.createConnection({
-  host: 'localhost',  
-  user: 'root',       
-  password: '', 
-  database: 'int_b1', // Conexión a la base de datos int_b1
-  port: 3306,  // Puerto de MariaDB
+  host: "localhost",
+  user: "capturerUser",
+  password: "o8K0Kprr)55b",
+  database: "int_b1",
+  port: 3306,
 });
-
 const dbConnection_b2 = mysql.createConnection({
-  host: 'localhost',  // Cambiar a la IP de la máquina si es remoto
-  user: 'root',       // Cambiar si es otro usuario
-  password: '', 
-  database: 'int_b2', // Conexión a la base de datos int_b2
-  port: 3306,  // Puerto de MariaDB
+  host: "localhost",
+  user: "capturerUser",
+  password: "o8K0Kprr)55b",
+  database: "int_b2",
+  port: 3306,
 });
 
-// Probar la conexión a MariaDB para int_b1
 dbConnection_b1.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos int_b1:', err.stack);
-    return;
-  }
-  console.log('Conexión exitosa a la base de datos int_b1');
+  if (err) return console.error("❌ Error int_b1:", err.stack);
+  console.log("✅ Conexión exitosa a int_b1");
+});
+dbConnection_b2.connect((err) => {
+  if (err) return console.error("❌ Error int_b2:", err.stack);
+  console.log("✅ Conexión exitosa a int_b2");
 });
 
-// Probar la conexión a MariaDB para int_b2
-dbConnection_b2.connect((err) => {
-  if (err) {
-    console.error('Error al conectar a la base de datos int_b2:', err.stack);
-    return;
+
+const wss = new WebSocket.Server({ noServer: true });
+
+wss.on("connection", (ws) => {
+  console.log("📡 Cliente WebSocket conectado");
+  ws.send(JSON.stringify({ message: "¡Conexión WebSocket exitosa!" }));
+  ws.on("message", (message) => {
+    console.log("📩 Mensaje del cliente:", message);
+  });
+});
+
+
+httpServer.on("upgrade", (req, socket, head) => {
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    wss.emit("connection", ws, req);
+  });
+});
+httpsServer.on("upgrade", (req, socket, head) => {
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    wss.emit("connection", ws, req);
+  });
+});
+
+function cleanup() {
+  try {
+    if (fs.existsSync(destFlowsPath)) fs.unlinkSync(destFlowsPath);
+    if (fs.existsSync(destFlowsCredPath)) fs.unlinkSync(destFlowsCredPath);
+    if (fs.existsSync(userDir)) fs.rmdirSync(userDir);
+    console.log("🧹 Proceso Terminad");
+  } catch (e) {
+    console.warn("⚠️ Error limpieza", e);
   }
-  console.log('Conexión exitosa a la base de datos int_b2');
+}
+
+process.on("exit", cleanup);
+process.on("SIGINT", () => {
+  cleanup();
+  process.exit();
+});
+process.on("SIGTERM", () => {
+  cleanup();
+  process.exit();
+});
+process.on("uncaughtException", (err) => {
+  console.error("❌ Excepción no capturada:", err);
+  cleanup();
+  process.exit(1);
 });
