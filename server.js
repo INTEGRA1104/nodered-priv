@@ -125,15 +125,15 @@ RED.start();
 
 const dbConnection_b1 = mysql.createConnection({
   host: "localhost",
-  user: "capturerUser",
-  password: "o8K0Kprr)55b",
+  user: "root",
+  password: "",
   database: "int_b1",
   port: 3306,
 });
 const dbConnection_b2 = mysql.createConnection({
   host: "localhost",
-  user: "capturerUser",
-  password: "o8K0Kprr)55b",
+  user: "root",
+  password: "",
   database: "int_b2",
   port: 3306,
 });
